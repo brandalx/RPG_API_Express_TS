@@ -1,7 +1,10 @@
+//main app
 import "module-alias/register";
 import express from "express";
 import cors from "cors";
+import http from "http";
 import { PORT } from "@/configs/config";
+import { routesConfig } from "@/configs/index";
 const app = express();
 
 // Parse incoming request body as JSON
@@ -16,6 +19,12 @@ app.use(
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   })
 );
+
+// initilization of the routes
+routesConfig(app);
+
+// HTTP server initilization and listening for requests
+const server = http.createServer(app);
 
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}`);
