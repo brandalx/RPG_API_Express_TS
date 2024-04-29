@@ -50,4 +50,24 @@ describe("createCharacter Controller", () => {
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.json).toHaveBeenCalledWith({ message: "Invalid input" });
   });
+
+  // test for creation of character with 201 response
+  it("should create character and return 201 on successful creation", () => {
+    (validateCharacterCreationData as jest.Mock).mockReturnValue({
+      error: null,
+    });
+    (generateCharacter as jest.Mock).mockReturnValue({
+      id: "123",
+      name: "John",
+      job: "Warrior",
+    });
+    const req = mockRequest({ name: "John", job: "Warrior" });
+    const res = mockResponse();
+    createCharacter(req, res);
+    expect(res.status).toHaveBeenCalledWith(201);
+    expect(res.json).toHaveBeenCalledWith({
+      message: "Character created successfully",
+      character: { id: "123", name: "John", job: "Warrior" },
+    });
+  });
 });
