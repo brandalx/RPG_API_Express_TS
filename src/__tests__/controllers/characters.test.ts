@@ -38,4 +38,16 @@ describe("createCharacter Controller", () => {
       message: "Name and job are required.",
     });
   });
+
+  // test for handling bad validation req
+  it("should return 400 if validation fails", () => {
+    (validateCharacterCreationData as jest.Mock).mockReturnValue({
+      error: { details: [{ message: "Invalid input" }] },
+    });
+    const req = mockRequest({ name: "John", job: "Warrior" });
+    const res = mockResponse();
+    createCharacter(req, res);
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({ message: "Invalid input" });
+  });
 });
