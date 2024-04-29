@@ -70,4 +70,23 @@ describe("createCharacter Controller", () => {
       character: { id: "123", name: "John", job: "Warrior" },
     });
   });
+  // test for handling generic error
+
+  it("should handle errors during character generation", () => {
+    const errorMessage = "Failed to generate character";
+    (validateCharacterCreationData as jest.Mock).mockReturnValue({
+      error: null,
+    });
+    (generateCharacter as jest.Mock).mockImplementation(() => {
+      throw new Error(errorMessage);
+    });
+    const req = mockRequest({ name: "John", job: "Warrior" });
+    const res = mockResponse();
+    createCharacter(req, res);
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith({
+      message: "Failed to create character",
+      error: errorMessage,
+    });
+  });
 });
