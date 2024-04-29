@@ -1,3 +1,4 @@
+//character controller - all handlers for character controll
 import { Request, Response } from "express-serve-static-core";
 
 export const getCharacters = (req: Request, res: Response) => {
