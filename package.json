@@ -16,10 +16,12 @@
   "dependencies": {
     "@types/cors": "^2.8.17",
     "@types/dotenv": "^8.2.0",
+    "@types/joi": "^17.2.3",
     "@types/uuid": "^9.0.8",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "joi": "^17.13.0",
     "module-alias": "^2.2.2",
     "tsconfig-paths-jest": "^0.0.1",
     "uuid": "^9.0.1"
