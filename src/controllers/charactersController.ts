@@ -1,9 +1,9 @@
 //character controller - all handlers for character controll
-import { jobStats } from "@/data";
+
 import { CreateCharacterDto } from "@/dto";
 import { ErrorResponse, SuccessResponse } from "@/interfaces/Response";
 import { Character } from "@/models";
-import { createCharacter as generateCharacter } from "@/utils";
+import { generateCharacter } from "@/utils";
 import { validateCharacterCreationData } from "@/validations";
 import { Request, Response } from "express-serve-static-core";
 import Joi from "joi";
