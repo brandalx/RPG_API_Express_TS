@@ -41,3 +41,8 @@ dist/**/*
 yarn.lock
 
 .DS_Store
+
+#ignore dist ts build folder
+dist
+
+package-lock.json
