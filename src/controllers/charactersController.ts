@@ -13,8 +13,15 @@ export const getCharacters = (req: Request, res: Response): void => {
   res.json(allCharacters);
 };
 //controller to get character info by passsed id
-export const getCharacterById = (req: Request, res: Response) => {
-  res.send("Controller get character by id works");
+export const getCharacterById = (req: Request, res: Response): void => {
+  const { id } = req.params; //id extraction from params
+  const character = characters[id]; //attemp to find by passed id
+
+  if (character) {
+    res.json(character); //if exist returns found character
+  } else {
+    res.status(404).json({ message: "Character not found." }); //404 if not exist
+  }
 };
 //controller to create new character from passed data
 export const createCharacter = (
