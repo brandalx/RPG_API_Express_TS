@@ -2,17 +2,32 @@ import { Request, Response } from "express";
 import { createCharacter } from "@/controllers/charactersController";
 import { validateCharacterCreationData } from "@/validations";
 import { generateCharacter } from "@/utils";
+import { getCharacters } from "@/controllers/charactersController";
+//import for jest mock
+import * as characterData from "@/data";
 
+//todo: move mocks into their folder
 // Mocks for validation and character generation functions
 
+//mock for data creation validation
 jest.mock("@/validations", () => ({
   validateCharacterCreationData: jest.fn(),
 }));
 
+//mock for generate utility function
 jest.mock("@/utils", () => ({
   generateCharacter: jest.fn(),
 }));
 
+//mock data for characters for getting a list of characters
+jest.mock("@/data", () => ({
+  characters: {
+    "1": { id: "1", name: "john1", job: "Warrior" },
+    "2": { id: "2", name: "john2", job: "Mage" },
+  },
+}));
+
+//test suites
 //test suite for create character controller
 describe("createCharacter Controller", () => {
   //defining mock request
@@ -88,5 +103,28 @@ describe("createCharacter Controller", () => {
       message: "Failed to create character",
       error: errorMessage,
     });
+  });
+});
+
+//test suite for getting list of characters
+describe("getCharacters Controller", () => {
+  //mock request and response objects
+  const mockRequest = {} as Request;
+  const mockResponse = () => {
+    const res: any = {};
+    res.json = jest.fn().mockReturnValue(res);
+    res.status = jest.fn().mockReturnValue(res);
+    return res as Response;
+  };
+  // test to handle return a list of mocked characters via get characters controller
+  it("should return  array of  characters", () => {
+    const req = mockRequest;
+    const res = mockResponse();
+    getCharacters(req, res);
+
+    expect(res.json).toHaveBeenCalledWith([
+      { id: "1", name: "john1", job: "Warrior" },
+      { id: "2", name: "john2", job: "Mage" },
+    ]);
   });
 });
