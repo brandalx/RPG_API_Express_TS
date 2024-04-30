@@ -98,4 +98,22 @@ describe("beginBattle Controller", () => {
       })
     );
   });
+
+  //Test for same character id for attacker and defender
+  it("should return 500 if the attacker and defender are the same character (cannot atack himslef check)", () => {
+    const req = mockRequest({
+      attackerId: "b7044d1a-c4e5-456f-9f2e-aad31222fe96",
+      defenderId: "b7044d1a-c4e5-456f-9f2e-aad31222fe96",
+    });
+    const res = mockResponse();
+    beginBattle(req, res);
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        message: expect.stringContaining(
+          "Character cannot play against himself. Please select or create different character and try again"
+        ),
+      })
+    );
+  });
 });
