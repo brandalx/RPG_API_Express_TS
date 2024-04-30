@@ -3,24 +3,25 @@ import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import { Express } from "express";
 import { PORT } from "@/configs";
-
+import path from "path";
 // swagger options
+
 const options = {
   definition: {
     openapi: "3.0.0",
     info: {
       title: "Express API with Swagger",
       version: "1.0.0",
-      description: "Neo-Brandon Home Assigment",
+      description: "Neo-Brandon Home Assignment",
     },
     servers: [
       {
-        url: `http://localhost:${PORT}`, //dynamic port for deploy
+        url: `http://localhost:${PORT}`,
         description: "dev server",
       },
     ],
   },
-  apis: ["@config/*.ts"],
+  apis: [path.join(__dirname, "..", "..", "routes", "*ts")], // deploy path
 };
 
 // swagger docs init
