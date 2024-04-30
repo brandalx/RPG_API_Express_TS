@@ -78,6 +78,7 @@ describe("createCharacter Controller", () => {
       id: "123",
       name: "John",
       job: "Warrior",
+      speedModifier: 3.4,
     });
     const req = mockRequest({ name: "John", job: "Warrior" });
     const res = mockResponse();
@@ -85,7 +86,12 @@ describe("createCharacter Controller", () => {
     expect(res.status).toHaveBeenCalledWith(201);
     expect(res.json).toHaveBeenCalledWith({
       message: "Character created successfully",
-      character: { id: "123", name: "John", job: "Warrior" },
+      character: {
+        id: "123",
+        name: "John",
+        job: "Warrior",
+        speedModifier: 3.4,
+      },
     });
   });
   // test for handling generic error

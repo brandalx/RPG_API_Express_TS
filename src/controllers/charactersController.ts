@@ -38,6 +38,9 @@ export const createCharacter = (
 
   try {
     const newCharacter = generateCharacter(name, job);
+    newCharacter.speedModifier = parseFloat(
+      newCharacter.speedModifier.toFixed(2)
+    ); //precision of speed modifier to two decimal places when creating character
     return res.status(201).json({
       message: "Character created successfully",
       character: newCharacter,
