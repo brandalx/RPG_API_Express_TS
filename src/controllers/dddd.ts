@@ -24,48 +24,35 @@ export const beginBattle = (req: Request, res: Response) => {
   }
 
   // begin battle log and round counter
-  let log = `Battle between ${attacker.name} (${attacker.job}) - ${attacker.hp} HP and ${defender.name} (${defender.job}) - ${defender.hp} HP begins!\n`;
-  let round = 1;
-  let first, second;
+  let log = `battle between ${attacker.name} (${attacker.job}) - ${attacker.hp} HP and ${defender.name} (${defender.job}) - ${defender.hp} HP begins!\n`; //log
+  let round = 1; //counter
 
   // loop battle until one characters hp drops to 0 or  less
-  while (true) {
-    let attackerSpeedRoll = Math.random() * attacker.speedModifier;
-    let defenderSpeedRoll = Math.random() * defender.speedModifier;
+  while (attacker.hp > 0 && defender.hp > 0) {
+    let first = attacker;
+    let second = defender;
 
     // select who attacks first with  a random speed comparison formula
-    if (attackerSpeedRoll > defenderSpeedRoll) {
-      first = attacker;
-      second = defender;
-      //console whos the first round is gonna be
-      log += `${attacker.name}'s speed (${attackerSpeedRoll.toFixed(
-        2
-      )}) was faster than ${defender.name}'s (${defenderSpeedRoll.toFixed(
-        2
-      )}) and will begin this round.\n`;
-      break;
-    } else if (attackerSpeedRoll < defenderSpeedRoll) {
+    if (
+      Math.random() * attacker.speedModifier <
+      Math.random() * defender.speedModifier
+    ) {
       first = defender;
       second = attacker;
-      log += `${defender.name}'s speed (${defenderSpeedRoll.toFixed(
-        2
-      )}) was faster than ${attacker.name}'s (${attackerSpeedRoll.toFixed(
-        2
-      )}) and will begin this round.\n`;
-      break;
     }
-    // in case of a draw, the loop continues without logging
-  }
-  //battle logic
-  while (attacker.hp > 0 && defender.hp > 0) {
+
     // console the current round and who is attacking whom
     log += `Round ${round}: ${first.name} attacks ${second.name}.\n`;
     let damage = Math.floor(Math.random() * first.attackModifier);
     second.hp -= damage;
-    second.hp = Math.max(second.hp, 0); /// ensure hP does not go negative
+    second.hp = Math.max(second.hp, 0); // ensure hP does not go negative
+
     // console damage dealt and remaining HP
     log += `${first.name} deals ${damage} damage to ${second.name}. ${second.name} has ${second.hp} HP remaining.\n`;
 
+    console.log(log);
+    console.log(defender);
+    console.log(attacker);
     // checK if the defender is defeated
     if (second.hp <= 0) {
       log += `${first.name} wins the battle! ${first.name} still has ${first.hp} HP remaining!\n`;
@@ -75,16 +62,15 @@ export const beginBattle = (req: Request, res: Response) => {
     }
 
     // Swap roles for the next attack
-    [first, second] = [second, first];
+    [attacker, defender] = [defender, attacker];
     round++;
   }
-
   // log  final result and send return
   console.log(log);
   res.json({
-    message: "Battle finished",
+    message: "Battle concluded",
     log,
-    winner: first.isAlive ? first : second,
-    loser: !first.isAlive ? first : second,
+    winner: attacker.isAlive ? attacker : defender,
+    loser: attacker.isAlive ? defender : attacker,
   });
 };
