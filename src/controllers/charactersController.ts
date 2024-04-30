@@ -1,15 +1,16 @@
 //character controller - all handlers for character controll
-
 import { CreateCharacterDto } from "@/dto";
 import { ErrorResponse, SuccessResponse } from "@/interfaces/Response";
 import { Character } from "@/models";
 import { generateCharacter } from "@/utils";
 import { validateCharacterCreationData } from "@/validations";
 import { Request, Response } from "express-serve-static-core";
-import Joi from "joi";
+import { characters } from "@/data";
+
 //controller to get list if all characters
-export const getCharacters = (req: Request, res: Response) => {
-  res.send("Controller get characters works");
+export const getCharacters = (req: Request, res: Response): void => {
+  const allCharacters: Character[] = Object.values(characters);
+  res.json(allCharacters);
 };
 //controller to get character info by passsed id
 export const getCharacterById = (req: Request, res: Response) => {
