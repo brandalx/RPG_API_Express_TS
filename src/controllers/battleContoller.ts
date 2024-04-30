@@ -25,14 +25,14 @@ export const beginBattle = (req: Request, res: Response) => {
   //check if selected attacker character is dead already or his hp too low to play
   if (!attacker.isAlive || attacker.hp <= 0) {
     return res.status(500).json({
-      message: `Character ${attacker.name} cannot attend tot his fight because his HP too low `,
+      message: `Character ${attacker.name} cannot attend to this fight because his HP too low `,
     });
   }
   //check if selected defender character is dead already or his hp too low to play
 
   if (!defender.isAlive || defender.hp <= 0) {
     return res.status(500).json({
-      message: `Character ${defender.name} cannot attend tot his fight because his HP too low `,
+      message: `Character ${defender.name} cannot attend to this fight because his HP too low `,
     });
   }
   //check if selected attacker  id  is the same as defender id (cannot play against himself)
