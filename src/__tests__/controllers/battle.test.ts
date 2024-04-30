@@ -80,4 +80,22 @@ describe("beginBattle Controller", () => {
       message: "One or both characters not found.",
     });
   });
+
+  //test for dead or 0 hp or less characters
+  it("should return 500 if any character is dead or has 0 hp", () => {
+    const req = mockRequest({
+      attackerId: "dead-character-id",
+      defenderId: "49dc9432-d912-4251-b80b-740a00a85d07",
+    });
+    const res = mockResponse();
+    beginBattle(req, res);
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        message: expect.stringContaining(
+          "cannot attend to this fight because his HP too low"
+        ),
+      })
+    );
+  });
 });
