@@ -65,4 +65,19 @@ describe("beginBattle Controller", () => {
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.json).toHaveBeenCalledWith({ message: "Invalid input" });
   });
+
+  //test for non-existing characters
+  it("should return 404 if one or both characters do not exist", () => {
+    const req = mockRequest({
+      attackerId: "sdfssfd",
+      defenderId: "sdfswasdwads",
+    });
+    const res = mockResponse();
+    (validateBattleIncomingData as jest.Mock).mockReturnValue({ error: null });
+    beginBattle(req, res);
+    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.json).toHaveBeenCalledWith({
+      message: "One or both characters not found.",
+    });
+  });
 });
