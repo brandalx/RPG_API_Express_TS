@@ -22,6 +22,25 @@ export const beginBattle = (req: Request, res: Response) => {
       .status(404)
       .json({ message: "One or both characters not found." });
   }
+  //check if selected attacker character is dead already or his hp too low to play
+  if (!attacker.isAlive || attacker.hp <= 0) {
+    return res.status(500).json({
+      message: `Character ${attacker.name} cannot attend tot his fight because his HP too low `,
+    });
+  }
+  //check if selected defender character is dead already or his hp too low to play
+
+  if (!defender.isAlive || defender.hp <= 0) {
+    return res.status(500).json({
+      message: `Character ${defender.name} cannot attend tot his fight because his HP too low `,
+    });
+  }
+  //check if selected attacker  id  is the same as defender id (cannot play against himself)
+  if (defender.id === attacker.id) {
+    return res.status(500).json({
+      message: `Character cannot play against himself. Please select or create different character and try again `,
+    });
+  }
 
   // begin battle log and round counter
   let log = `Battle between ${attacker.name} (${attacker.job}) - ${attacker.hp} HP and ${defender.name} (${defender.job}) - ${defender.hp} HP begins!\n`;
