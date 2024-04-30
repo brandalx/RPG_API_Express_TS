@@ -40,3 +40,29 @@ jest.mock("@/data", () => ({
     },
   },
 }));
+
+describe("beginBattle Controller", () => {
+  //  request and response mock
+  const mockRequest = (body: any): Request<any, any, any> =>
+    ({
+      body,
+    } as Request<any, any, any>);
+  const mockResponse = (): Response => {
+    const res: any = {};
+    res.status = jest.fn().mockReturnValue(res);
+    res.json = jest.fn().mockReturnValue(res);
+    return res as Response;
+  };
+
+  // invalid data input test
+  it("should return 400 for invalid request data", () => {
+    const req = mockRequest({ attackerId: "", defenderId: "" });
+    const res = mockResponse();
+    (validateBattleIncomingData as jest.Mock).mockReturnValue({
+      error: { details: [{ message: "Invalid input" }] },
+    });
+    beginBattle(req, res);
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({ message: "Invalid input" });
+  });
+});
