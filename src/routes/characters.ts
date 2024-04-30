@@ -51,6 +51,20 @@ router.get("/:id", getCharacterById);
  *     summary: Create a new character
  *     requestBody:
  *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: Name of the character
+ *               job:
+ *                 type: string
+ *                 description: Job or class of the character
+ *             required:
+ *               - name
+ *               - job
  *     responses:
  *       201:
  *         description: Character created successfully
