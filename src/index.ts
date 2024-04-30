@@ -5,7 +5,11 @@ import cors from "cors";
 import http from "http";
 import { PORT } from "@/configs/config";
 import { routesConfig } from "@/configs/index";
+import setupSwagger from "@/docs/swagger/swagger";
 const app = express();
+
+//enables swagger
+setupSwagger(app);
 
 // Parse incoming request body as JSON
 app.use(express.json());
