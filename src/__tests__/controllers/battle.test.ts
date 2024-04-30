@@ -116,4 +116,18 @@ describe("beginBattle Controller", () => {
       })
     );
   });
+  // test for successful battle
+  it("should initiate battle correctly when valid characters are provided", () => {
+    const req = mockRequest({
+      attackerId: "b7044d1a-c4e5-456f-9f2e-aad31222fe96",
+      defenderId: "49dc9432-d912-4251-b80b-740a00a85d07",
+    });
+    const res = mockResponse();
+    beginBattle(req, res);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        message: "Battle finished",
+      })
+    );
+  });
 });
