@@ -1,5 +1,8 @@
 import { Request, Response } from "express";
-import { createCharacter } from "@/controllers/charactersController";
+import {
+  createCharacter,
+  getCharacterById,
+} from "@/controllers/charactersController";
 import { validateCharacterCreationData } from "@/validations";
 import { generateCharacter } from "@/utils";
 import { getCharacters } from "@/controllers/charactersController";
@@ -126,5 +129,42 @@ describe("getCharacters Controller", () => {
       { id: "1", name: "john1", job: "Warrior" },
       { id: "2", name: "john2", job: "Mage" },
     ]);
+  });
+});
+
+//test suite for get character by id Controller
+describe("getCharacterById Controller", () => {
+  //  create a mock request with params passed
+  const mockRequest = (params: { id: string }): Request =>
+    ({
+      params,
+    } as unknown as Request);
+
+  // create mock response
+  const mockResponse = () => {
+    const res: any = {};
+    res.status = jest.fn().mockReturnValue(res);
+    res.json = jest.fn().mockReturnValue(res);
+    return res as Response;
+  };
+
+  // test for reTrieving a character by id
+  it("should return the  character if exists", () => {
+    const req = mockRequest({ id: "1" }); //if character with id 1 exist
+    const res = mockResponse();
+    getCharacterById(req, res);
+
+    expect(res.json).toHaveBeenCalledWith(characterData.characters["1"]);
+    expect(res.status).not.toHaveBeenCalledWith(404);
+  });
+
+  //test for handling case where character does not exist
+  it("should return 404 if character does not exist", () => {
+    const req = mockRequest({ id: "sdsdsdsdsw" }); // not valid character id
+    const res = mockResponse();
+    getCharacterById(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.json).toHaveBeenCalledWith({ message: "Character not found." });
   });
 });
