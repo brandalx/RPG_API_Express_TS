@@ -5,7 +5,7 @@
   "author": "brndalx<113251192+brandalx@users.noreply.github.com>",
   "license": "MIT",
   "_moduleAliases": {
-    "@": "./src"
+    "@": "src"
   },
   "scripts": {
     "test": "jest",
