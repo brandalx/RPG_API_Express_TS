@@ -4,6 +4,10 @@
 
 This project is a backend system for a new role-playing game, focusing on managing characters and controlling game flow. It includes API endpoints for character creation, listing, and detailed views, along with a combat system simulation. The API is developed with Express.js and TypeScript. This project also contains unit tests with Jest for all controllers, API documentation with swagger for all routes, and its ready for deploy via Docker or regular build. Application in type safe and scalable.
 
+## Git workflow
+
+This project was built using the [Git Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) workflow. workflow. That means this bundle includes all commits and branches that are being used in the development process.
+
 ## Techonologies and libraries used
 
 - **Express.js**: Core web application framework for building APIs.
